@@ -1,3 +1,9 @@
+import { config } from 'dotenv';
+import { resolve } from 'path';
+
+// Carregar variáveis de ambiente do config.env.local
+config({ path: resolve(process.cwd(), 'config.env.local') });
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
