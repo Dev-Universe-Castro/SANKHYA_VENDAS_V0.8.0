@@ -68,10 +68,11 @@ export async function POST(request: Request) {
     const response = NextResponse.json({ user: userWithoutPassword });
     response.cookies.set('user', JSON.stringify(userWithoutPassword), {
       httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
+      secure: false, // Usar false para HTTP (não HTTPS)
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7,
-      path: '/'
+      path: '/',
+      domain: process.env.NODE_ENV === 'production' ? 'crescimentoerp.nuvemdatacom.com.br' : undefined
     });
 
     return response;
