@@ -1,8 +1,23 @@
 import { config } from 'dotenv';
 import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Carregar variáveis de ambiente do config.env.local
-config({ path: resolve(process.cwd(), 'config.env.local') });
+config({ path: resolve(__dirname, 'config.env.local') });
+
+// Injetar as variáveis no process.env para que o Next.js possa acessá-las
+Object.keys(process.env).forEach(key => {
+  if (key.startsWith('NEXT_PUBLIC_') || 
+      key.startsWith('SANKHYA_') || 
+      key.startsWith('GEMINI_')) {
+    process.env[key] = process.env[key];
+  }
+});
+
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
